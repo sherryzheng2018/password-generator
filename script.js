@@ -6,10 +6,19 @@ var lowercasaeList = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l"
 var uppercaseList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 var specialCharators = ['\>','\*','\@','\!','\$','\^','\?','\%','\#'];
 
+var passwordLength, lowercase, uppercase, numeric, specialCha;
 
 // Write password to the #password input
 function writePassword() {
+  getRequirement();
   var password = generatePassword();
+
+  // var resultCorrect = verifyPassword(password);
+  // while(!resultCorrect) {
+  //   password = generatePassword();
+  //   resultCorrect = verifyPassword(password);
+  // }
+
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
@@ -18,13 +27,12 @@ function writePassword() {
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
-
-function generatePassword(){
+function getRequirement(){
   //track number of attemps in case of invalid input
   var attempCount = 0;
   //prompt for required password length
   var lengthInput = prompt("How many charactors do you want in the password?");   
-  var passwordLength = parseInt(lengthInput);
+  passwordLength = parseInt(lengthInput);
 
   //ask user to choose again if input invalid
   while(!lengthInput || passwordLength > 128 || passwordLength < 8){
@@ -38,36 +46,38 @@ function generatePassword(){
     passwordLength = parseInt(lengthInput); //finalize password length
   } 
 
-    //prompt for types of character needed for password
-    var lowercase = confirm("Do you want to include lowercase?");
-    var uppercase = confirm("Do you want to include uppercase?");
-    var numeric = confirm("Do you want to include numbers?");
-    var specialCha = confirm("Do you want to include special charactors?"); 
-    /* console.log("Include lowercase", lowercase);  */
-    // console.log("Include uppercase", uppercase); 
-    // console.log("Include numbers", numeric); 
-    // console.log("Include special charactors", specialCha);
+  //prompt for types of character needed for password
+  lowercase = confirm("Do you want to include lowercase?");
+  uppercase = confirm("Do you want to include uppercase?");
+  numeric = confirm("Do you want to include numbers?");
+  specialCha = confirm("Do you want to include special charactors?"); 
+  /* console.log("Include lowercase", lowercase);  */
+  // console.log("Include uppercase", uppercase); 
+  // console.log("Include numbers", numeric); 
+  // console.log("Include special charactors", specialCha);
 
-    //verify requirement prompt result, ask again if none chosen
-    while (!lowercase&&!uppercase&&!specialCha&&!specialCha) {
-      console.log(123);
-      attempCount++;
-      if(attempCount > 2) {
-        alert("Too many attemps, good bye");
-        return "password generation failed";
-      }
-
-      alert("You should at least pick ONE type. Please select again!");
-      lowercase = confirm("Do you want to include lowercase?");
-      uppercase = confirm("Do you want to include uppercase?");
-      numeric = confirm("Do you want to include numbers?");
-      specialCha = confirm("Do you want to include special charactors?"); 
-      // console.log(lowercase);
-      // console.log(uppercase);
-      // console.log(numeric);
-      // console.log(specialCha);
+  //verify requirement prompt result, ask again if none chosen
+  while (!lowercase&&!uppercase&&!specialCha&&!specialCha) {
+    console.log(123);
+    attempCount++;
+    if(attempCount > 2) {
+      alert("Too many attemps, good bye");
+      return "password generation failed";
     }
-    
+
+    alert("You should at least pick ONE type. Please select again!");
+    lowercase = confirm("Do you want to include lowercase?");
+    uppercase = confirm("Do you want to include uppercase?");
+    numeric = confirm("Do you want to include numbers?");
+    specialCha = confirm("Do you want to include special charactors?"); 
+    // console.log(lowercase);
+    // console.log(uppercase);
+    // console.log(numeric);
+    // console.log(specialCha);
+  }
+}
+
+function generatePassword(){
     //define a holding array to hold needed characters
     var holdingArray = [];
 
@@ -102,8 +112,6 @@ function generatePassword(){
     //return result;
     return returnPass;
 }
-
-
 
 // GIVEN I need a new, secure password
 // WHEN I click the button to generate a password
